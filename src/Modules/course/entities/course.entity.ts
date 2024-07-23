@@ -1,20 +1,19 @@
-import { Column, CreateDateColumn, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm';
-import { CourseState } from './course-state.entity';
+import { Column, Entity, JoinColumn, ManyToOne } from "typeorm";
+import { CourseState } from "./course-state.entity";
+import { CommonEntity } from "src/Common/common.entity";
 
 @Entity()
-export class Course {
-    @PrimaryGeneratedColumn()
-    id: number
-    @Column()
-    
-    nombre: string
-    @Column({default: () => 'CURRENT_TIMESTAMP'})
-    updatedDay: Date
-    
-    @Column()
-    description: string
+export class Course extends CommonEntity {
+  @Column()
+  nombre: string;
 
-    @ManyToOne(() => CourseState, (state) => state.courses)    
-    @JoinColumn({referencedColumnName: 'id', name: 'courseState'})
-    state: CourseState
+  @Column({ default: () => "CURRENT_TIMESTAMP" })
+  updatedDay: Date;
+
+  @Column({ default: "No description provided" })
+  description: string;
+
+  @ManyToOne(() => CourseState, (state) => state.courses)
+  @JoinColumn({ referencedColumnName: "id", name: "courseState" })
+  state: CourseState;
 }

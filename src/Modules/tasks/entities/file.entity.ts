@@ -1,29 +1,32 @@
-import { Column, CreateDateColumn, Entity, JoinColumn, ManyToOne, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm';
-import { FileTask } from './file-task.entity';
+import { Column, Entity, JoinTable, ManyToMany } from "typeorm";
+import { TaskStudent } from "./task-student.entity";
+import { CommonEntity } from "src/Common/common.entity";
 
 @Entity()
-export class File {
-    @PrimaryGeneratedColumn()
-    id: number
+export class File extends CommonEntity {
+  @Column()
+  name: string;
 
-    @Column()
-    name: string
+  @Column()
+  url: string;
 
-    @Column()
-    url: string
+  @ManyToMany(() => TaskStudent)
+  @JoinTable({
+    name: "file_task_student",
+    joinColumn: {
+      name: "file",
+      foreignKeyConstraintName: "FK_file_task_student_file",
+    },
+    inverseJoinColumn: {
+      name: "taskStudent",
+      foreignKeyConstraintName: "FK_task_student",
+    },
+  })
+  taskStudent: Array<TaskStudent>;
 
-    @OneToMany(() => FileTask, fileTask => fileTask.file)
-    fileTask: FileTask[]    
+  @Column()
+  extension: string;
 
-    @Column()
-    extension: string
-
-    @Column()
-    size: number
-
-    @Column()
-    createdDay: Date
-    
-    @Column()    
-    updatedDay: Date
+  @Column()
+  size: number;
 }

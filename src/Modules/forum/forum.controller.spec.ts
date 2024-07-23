@@ -1,8 +1,8 @@
-import { Test, TestingModule } from '@nestjs/testing';
-import { ForumController } from './forum.controller';
-import { ForumService } from './forum.service';
+import { Test, TestingModule } from "@nestjs/testing";
+import { ForumController } from "./forum.controller";
+import { ForumService } from "./forum.service";
 
-describe('ForumController', () => {
+describe("ForumController", () => {
   let controller: ForumController;
 
   beforeEach(async () => {
@@ -14,7 +14,7 @@ describe('ForumController', () => {
     controller = module.get<ForumController>(ForumController);
   });
 
-  it('should be defined', () => {
+  it("should be defined", () => {
     expect(controller).toBeDefined();
   });
 });

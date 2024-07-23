@@ -1,34 +1,32 @@
-import { Injectable } from '@nestjs/common';
-import { CreateForumDto } from './dto/create-forum.dto';
-import { UpdateForumDto } from './dto/update-forum.dto';
-import { Forum } from './entities/forum.entity';
-import { ForumMessage } from './entities/forum-message.entity';
-import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { Injectable } from "@nestjs/common";
+import { CreateForumDto } from "./dto/create-forum.dto";
+import { UpdateForumDto } from "./dto/update-forum.dto";
+import { Forum } from "./entities/forum.entity";
+import { ForumMessage } from "./entities/forum-message.entity";
+import { InjectRepository } from "@nestjs/typeorm";
+import { Repository } from "typeorm";
 
 @Injectable()
 export class ForumService {
-
   constructor(
     @InjectRepository(Forum)
     private readonly forumRepository: Repository<Forum>,
-    
+
     @InjectRepository(ForumMessage)
-    private readonly forumMessageRepository: Repository<ForumMessage>
+    private readonly forumMessageRepository: Repository<ForumMessage>,
   ) {}
 
   async create(createForumDto: CreateForumDto) {
-    const newForum = await this.forumRepository.save(createForumDto)
-
-    return newForum.id
+    const newForum = await this.forumRepository.save(createForumDto);
+    return newForum.id;
   }
 
   findAll() {
-    return this.forumRepository.find();
+    return this.forumRepository.find({ relations: ["messages"] });
   }
 
   findOne(id: number) {
-    return this.forumRepository.findOne({where: {id}});
+    return this.forumRepository.findOne({ where: { id } });
   }
 
   update(id: number, updateForumDto: UpdateForumDto) {
@@ -37,5 +35,12 @@ export class ForumService {
 
   remove(id: number) {
     return this.forumRepository.delete(id);
+  }
+
+  findAllMessages(forumId: number) {
+    return this.forumMessageRepository.find({
+      where: { forum: { id: forumId } },
+      relations: ["forum"],
+    });
   }
 }

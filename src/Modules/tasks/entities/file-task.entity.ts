@@ -1,23 +1,15 @@
-import { Column, CreateDateColumn, Entity, JoinColumn, ManyToOne, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm';
-import { Task } from './task.entity';
-import { File } from './file.entity';
+import { Entity, JoinColumn, ManyToOne } from "typeorm";
+import { Task } from "./task.entity";
+import { File } from "./file.entity";
+import { CommonEntity } from "src/Common/common.entity";
 
 @Entity()
-export class FileTask {
-    @PrimaryGeneratedColumn()
-    id: number;
+export class FileTask extends CommonEntity {
+  @ManyToOne(() => Task)
+  @JoinColumn({ referencedColumnName: "id", name: "task" })
+  task: Task;
 
-    @ManyToOne(() => Task)
-    @JoinColumn({referencedColumnName: 'id', name: 'task'})
-    task: Task
-
-    @ManyToOne(() => File)
-    @JoinColumn({referencedColumnName: 'id', name: 'file'})
-    file : File   
-
-    @Column()
-    createdDay: Date
-
-    @Column()
-    updatedDay: Date
+  @ManyToOne(() => File)
+  @JoinColumn({ referencedColumnName: "id", name: "file" })
+  file: File;
 }
