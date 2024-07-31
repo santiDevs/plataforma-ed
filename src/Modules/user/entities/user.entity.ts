@@ -12,6 +12,7 @@ import { UserType } from "./user-type.entity";
 import { TaskStudent } from "src/modules/tasks/entities/task-student.entity";
 import { TeacherCourse } from "src/modules/course/entities/teacher-course.entity";
 import { CommonEntity } from "src/Common/common.entity";
+import { Exclude, Transform } from "class-transformer";
 
 @Entity()
 export class User extends CommonEntity {
@@ -21,6 +22,8 @@ export class User extends CommonEntity {
   nombre: string;
   @Column()
   lastname: string;
+
+  @Exclude()
   @Column()
   password: string;
   @Column({ unique: true })
@@ -32,6 +35,7 @@ export class User extends CommonEntity {
 
   @ManyToOne(() => UserType)
   @JoinColumn({ referencedColumnName: "id", name: "userType" })
+  @Transform((userType) => userType.type)
   userType: UserType;
 
   @OneToMany(() => TaskStudent, (tasks) => tasks.student)
