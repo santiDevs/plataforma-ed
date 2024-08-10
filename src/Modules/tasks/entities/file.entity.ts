@@ -2,6 +2,9 @@ import { Column, Entity, JoinTable, ManyToMany } from "typeorm";
 import { TaskStudent } from "./task-student.entity";
 import { CommonEntity } from "src/Common/common.entity";
 
+/**
+ *  Entidad que representa el archivo en la base de datos
+ */
 @Entity()
 export class File extends CommonEntity {
   @Column()

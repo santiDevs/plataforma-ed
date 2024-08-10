@@ -4,6 +4,9 @@ import {
   UpdateDateColumn,
 } from "typeorm";
 
+/**
+ *
+ */
 export class CommonEntity {
   @PrimaryGeneratedColumn()
   id: number;

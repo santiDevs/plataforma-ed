@@ -9,6 +9,9 @@ import { TasksModule } from "./modules/tasks/tasks.module";
 import { EvaluationModule } from "./modules/evaluation/evaluation.module";
 import { AuthModule } from "./modules/auth/auth.module";
 
+/**
+ *
+ */
 @Module({
   imports: [
     UserModule,

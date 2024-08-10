@@ -14,6 +14,9 @@ import { TeacherCourse } from "src/modules/course/entities/teacher-course.entity
 import { CommonEntity } from "src/Common/common.entity";
 import { Exclude, Transform } from "class-transformer";
 
+/**
+ * Entidad que representa el usuario en la base de datos
+ */
 @Entity()
 export class User extends CommonEntity {
   @PrimaryGeneratedColumn()

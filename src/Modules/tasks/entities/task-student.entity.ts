@@ -11,6 +11,9 @@ import { File } from "./file.entity";
 import { Task } from "./task.entity";
 import { CommonEntity } from "src/Common/common.entity";
 
+/**
+ *  Entidad que representa la tarea del estudiante en la base de datos
+ */
 @Entity()
 export class TaskStudent extends CommonEntity {
   @ManyToMany(() => File)

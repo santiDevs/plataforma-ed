@@ -6,6 +6,9 @@ import { ForumMessage } from "./entities/forum-message.entity";
 import { TypeOrmModule } from "@nestjs/typeorm";
 import { User } from "../user/entities/user.entity";
 
+/**
+ *
+ */
 @Module({
   imports: [TypeOrmModule.forFeature([Forum, ForumMessage, User])],
 

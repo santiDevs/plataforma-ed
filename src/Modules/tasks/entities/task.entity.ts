@@ -4,6 +4,9 @@ import { FileTask } from "./file-task.entity";
 import { TaskStudent } from "./task-student.entity";
 import { CommonEntity } from "src/Common/common.entity";
 
+/**
+ *  Entidad que representa la tarea en la base de datos
+ */
 @Entity()
 export class Task extends CommonEntity {
   @ManyToOne(() => TeacherCourse)

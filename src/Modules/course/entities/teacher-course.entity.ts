@@ -10,6 +10,9 @@ import {
 import { Course } from "./course.entity";
 import { CommonEntity } from "src/Common/common.entity";
 
+/**
+ *
+ */
 @Entity()
 export class TeacherCourse extends CommonEntity {
   @ManyToOne(() => Course)

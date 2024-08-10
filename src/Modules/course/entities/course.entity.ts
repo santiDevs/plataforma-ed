@@ -2,6 +2,9 @@ import { Column, Entity, JoinColumn, ManyToOne } from "typeorm";
 import { CourseState } from "./course-state.entity";
 import { CommonEntity } from "src/Common/common.entity";
 
+/**
+ *
+ */
 @Entity()
 export class Course extends CommonEntity {
   @Column()

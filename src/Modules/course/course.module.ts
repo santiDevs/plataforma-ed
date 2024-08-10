@@ -6,6 +6,9 @@ import { CourseState } from "./entities/course-state.entity";
 import { TypeOrmModule } from "@nestjs/typeorm";
 import { TeacherCourse } from "./entities/teacher-course.entity";
 
+/**
+ *
+ */
 @Module({
   imports: [TypeOrmModule.forFeature([Course, CourseState, TeacherCourse])],
 
