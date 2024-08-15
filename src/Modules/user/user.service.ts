@@ -6,6 +6,7 @@ import { Repository } from "typeorm";
 import { UserType } from "./entities/user-type.entity";
 import { User } from "./entities/user.entity";
 import { UpdateCourseDto } from "../course/dto/update-course.dto";
+import { UpdateResult } from "typeorm";
 
 /**
  * Clase que contiene los metodos para manipular la entidad de User y Usertype

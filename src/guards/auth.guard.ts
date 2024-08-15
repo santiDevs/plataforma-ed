@@ -9,7 +9,6 @@ import { JwtService } from "@nestjs/jwt";
 import { Observable } from "rxjs";
 import { Request } from "express";
 import { SecretJWTConstant } from "src/constants/jwt-secret";
-import { Console, log } from "console";
 
 /**
  * Guarda de autenticación que verifica el JWT en las solicitudes entrantes.
@@ -44,8 +43,6 @@ export class AuthGuard implements CanActivate {
     } catch {
       throw new UnauthorizedException("uno");
     }
-
-    console.log(request);
 
     return true;
   }
