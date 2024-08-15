@@ -62,7 +62,7 @@ export class UserService {
    * Actializa el usuario que le pasemos por su id
    * @param {number} id id del usuario que se desea actualizar
    * @param {UpdateCourseDto} updateUserDto las propiedades que se actualizaran del usuario
-   * @returns {Repository<User>} devuelve el id del usuario que se va a actualizar y sus propiedades
+   * @returns {Promise<UpdateResult>} devuelve el id del usuario que se va a actualizar y sus propiedades
    */
   update(id: number, updateUserDto: UpdateUserDto) {
     return this.userRepository.update(id, updateUserDto);

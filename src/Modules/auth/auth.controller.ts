@@ -10,6 +10,7 @@ import { AuthService } from "./auth.service";
 import { LoginDto } from "./login.dto";
 import { CreateUserDto } from "../user/dto/create-user.dto";
 import { User } from "../user/entities/user.entity";
+import { AuthInterceptor } from "../interceptors/auth.interceptor.ts/auth-interceptor.interceptor";
 
 /**
  * Controlador para manejar las rutas de autenticación.
@@ -40,6 +41,7 @@ export class AuthController {
    * @returns {Promise<{ user: User, token: string }>} - El usuario autenticado y el token JWT generado.
    */
   @UseInterceptors(ClassSerializerInterceptor)
+  @UseInterceptors(AuthInterceptor)
   @Post("login")
   login(
     @Body()
