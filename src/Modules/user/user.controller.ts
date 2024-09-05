@@ -11,7 +11,7 @@ import { UserService } from "./user.service";
 import { CreateUserDto } from "./dto/create-user.dto";
 import { UpdateUserDto } from "./dto/update-user.dto";
 import { User } from "./entities/user.entity";
-import { UpdateResult } from "typeorm";
+import { FindOptionsWhere, UpdateResult } from "typeorm";
 
 /**
  * Controlador que contiene los metodos de usuarios
@@ -41,12 +41,14 @@ export class UserController {
 
   /**
    *
-   * @param {string} id el id del usuario que se desea encontrar
+   * @param {FindOptionsWhere<User> | FindOptionsWhere<User>[]} where el id del usuario que se desea encontrar
    * @returns {Promise<User>} devuelve el usuario
    */
   @Get(":id")
-  findOne(@Param("id") id: string) {
-    return this.userService.findOne(+id);
+  findOne(
+    @Param("id") where: FindOptionsWhere<User> | FindOptionsWhere<User>[],
+  ) {
+    return this.userService.findOne(where);
   }
 
   /**

@@ -7,16 +7,18 @@ import {
   Param,
   Delete,
   UseGuards,
-  Request,
+  Req,
 } from "@nestjs/common";
 import { CourseService } from "./course.service";
 import { CreateCourseDto } from "./dto/create-course.dto";
 import { UpdateCourseDto } from "./dto/update-course.dto";
 import { AuthGuard } from "src/guards/auth.guard";
-import { AuthTokenPayload } from "../auth/login.dto";
+import { AuthPayloadValidateInfo } from "../auth/login.dto";
 import { Course } from "./entities/course.entity";
 import { CourseState } from "./entities/course-state.entity";
 import { TeacherCourse } from "./entities/teacher-course.entity";
+import { JwtAuthGuard } from "src/guards/jwt-auth.guard";
+import { Request } from "express";
 
 /**
  * Controlador que maneja las operaciones relacionadas con los cursos.
@@ -41,7 +43,7 @@ export class CourseController {
    * @returns {Promise<Course[]>} Una lista de cursos.
    */
   @Get("courses")
-  @UseGuards(AuthGuard)
+  @UseGuards(JwtAuthGuard)
   findAll() {
     return this.courseService.findAll();
   }
@@ -53,9 +55,9 @@ export class CourseController {
    * @returns {Promise<Course[]>} Una lista de cursos del usuario.
    */
   @Get("getMyCourse")
-  @UseGuards(AuthGuard)
-  getMyCourse(@Request() request: Request) {
-    const payload = request["payload"] as AuthTokenPayload;
+  @UseGuards(JwtAuthGuard)
+  getMyCourse(@Req() request: Request) {
+    const payload = request.user["info"] as AuthPayloadValidateInfo;
     return this.courseService.findAll({ id: payload.id });
   }
 
