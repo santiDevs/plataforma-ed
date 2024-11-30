@@ -18,17 +18,6 @@ export class AuthInterceptor implements NestInterceptor {
    * @returns {Observable<any>} hagsdj
    */
   intercept(context: ExecutionContext, next: CallHandler): Observable<User> {
-    // const res = context.switchToHttp().getResponse<Response>();
-
-    // return next.handle().pipe(
-    //   tap(async ({ token }) => {
-    //     res.cookie("token", token, {});
-    //   }),
-    //   map(({ user }) => {
-    //     return user;
-    //   }),
-    // );
-
     return next.handle().pipe(
       map(({ user, token, refresh }) => {
         const response = context.switchToHttp().getResponse();

@@ -1,17 +1,17 @@
 import {
-  Controller,
-  Get,
-  Post,
   Body,
-  Patch,
-  Param,
+  Controller,
   Delete,
+  Get,
+  Param,
+  Patch,
+  Post,
 } from "@nestjs/common";
-import { UserService } from "./user.service";
+import { FindOptionsWhere, UpdateResult } from "typeorm";
 import { CreateUserDto } from "./dto/create-user.dto";
 import { UpdateUserDto } from "./dto/update-user.dto";
 import { User } from "./entities/user.entity";
-import { FindOptionsWhere, UpdateResult } from "typeorm";
+import { UserService } from "./user.service";
 
 /**
  * Controlador que contiene los metodos de usuarios
@@ -42,13 +42,12 @@ export class UserController {
   /**
    *
    * @param {FindOptionsWhere<User> | FindOptionsWhere<User>[]} where el id del usuario que se desea encontrar
+   * @param id
    * @returns {Promise<User>} devuelve el usuario
    */
   @Get(":id")
-  findOne(
-    @Param("id") where: FindOptionsWhere<User> | FindOptionsWhere<User>[],
-  ) {
-    return this.userService.findOne(where);
+  findOne(@Param("id") id: string) {
+    return this.userService.findOne({ id: +id });
   }
 
   /**

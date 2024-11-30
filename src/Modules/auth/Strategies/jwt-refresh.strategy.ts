@@ -2,8 +2,8 @@ import { Injectable } from "@nestjs/common";
 import { PassportStrategy } from "@nestjs/passport";
 import { Request } from "express";
 import { ExtractJwt, Strategy } from "passport-jwt";
-import { SecretJWTConstant } from "src/constants/jwt-secret";
 import { AuthPayloadValidate, AuthTokenPayload } from "../login.dto";
+import { ConfigService } from "@nestjs/config";
 
 /**
  *
@@ -13,14 +13,14 @@ export class JwtRefreshStrategy extends PassportStrategy(
   Strategy,
   "jwt-refresh",
 ) {
-  constructor() {
+  constructor(configService: ConfigService) {
     super({
       jwtFromRequest: ExtractJwt.fromExtractors([
         JwtRefreshStrategy.extractJWT,
         ExtractJwt.fromAuthHeaderAsBearerToken(),
       ]),
       ignoreExpiration: false,
-      secretOrKey: SecretJWTConstant.secret,
+      secretOrKey: configService.get<string>("JWT_REFRESH_SECRET"),
     });
   }
 
@@ -47,7 +47,12 @@ export class JwtRefreshStrategy extends PassportStrategy(
    * @returns {Promise<any>} Datos del usuario
    */
   async validate(payload: AuthTokenPayload): Promise<AuthPayloadValidate> {
-    return { info: { id: payload.id, email: payload.email } };
-    new Date(payload.exp * 1000);
+    return {
+      info: {
+        id: payload.id,
+        email: payload.email,
+      },
+      expiration: new Date(payload.exp * 1000),
+    };
   }
 }

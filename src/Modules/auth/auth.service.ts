@@ -11,10 +11,10 @@ import { CreateUserDto } from "../user/dto/create-user.dto";
 import * as bcrypt from "bcrypt";
 import { JwtService } from "@nestjs/jwt";
 import { User } from "../user/entities/user.entity";
-import { SecretJWTConstant } from "src/constants/jwt-secret";
 import { InjectRepository } from "@nestjs/typeorm";
 import { AuthRefreshToken } from "./entities/auth-refresh-token.entity";
 import { Repository } from "typeorm";
+import { ConfigService } from "@nestjs/config";
 
 /**
  * Servicio de autenticación que maneja el registro y login de usuarios.
@@ -26,6 +26,7 @@ export class AuthService {
     private readonly jwtService: JwtService,
     @InjectRepository(AuthRefreshToken)
     private authRefreshTokenRepository: Repository<AuthRefreshToken>,
+    private configService: ConfigService,
   ) {}
 
   /**
@@ -89,8 +90,8 @@ export class AuthService {
     };
 
     const newRefreshToken = this.jwtService.sign(refreshPayload, {
-      secret: SecretJWTConstant.refresh,
-      expiresIn: "30d",
+      secret: this.configService.get<string>("JWT_REFRESH_SECRET"),
+      expiresIn: "1h",
     });
 
     if (currentRefreshToken && currentRefreshTokenExpiresAt) {

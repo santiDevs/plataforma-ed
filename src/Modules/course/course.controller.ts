@@ -12,7 +12,6 @@ import {
 import { CourseService } from "./course.service";
 import { CreateCourseDto } from "./dto/create-course.dto";
 import { UpdateCourseDto } from "./dto/update-course.dto";
-import { AuthGuard } from "src/guards/auth.guard";
 import { AuthPayloadValidateInfo } from "../auth/login.dto";
 import { Course } from "./entities/course.entity";
 import { CourseState } from "./entities/course-state.entity";
@@ -76,7 +75,7 @@ export class CourseController {
    * @returns {Promise<TeacherCourse[]>} Una lista de cursos asignados a profesores.
    */
   @Get("teacherCourses")
-  @UseGuards(AuthGuard)
+  @UseGuards(JwtAuthGuard)
   findTeacherCourses() {
     return this.courseService.findTeacherCourses();
   }

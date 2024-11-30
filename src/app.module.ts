@@ -8,6 +8,7 @@ import { CourseModule } from "./modules/course/course.module";
 import { TasksModule } from "./modules/tasks/tasks.module";
 import { EvaluationModule } from "./modules/evaluation/evaluation.module";
 import { AuthModule } from "./modules/auth/auth.module";
+import { ConfigModule, ConfigService } from "@nestjs/config";
 
 /**
  *
@@ -15,14 +16,20 @@ import { AuthModule } from "./modules/auth/auth.module";
 @Module({
   imports: [
     UserModule,
-    TypeOrmModule.forRoot({
-      type: "mysql",
-      host: "localhost",
-      port: 3306,
-      username: "root",
-      password: "",
-      database: "eduline",
-      autoLoadEntities: true,
+    ConfigModule.forRoot({
+      isGlobal: true,
+    }),
+    TypeOrmModule.forRootAsync({
+      useFactory: (configService: ConfigService) => ({
+        type: "mysql",
+        host: configService.get<string>("DATABASE_HOST"),
+        port: configService.get<number>("DATABASE_PORT"),
+        username: configService.get<string>("DATABASE_USER"),
+        password: configService.get<string>("DATABASE_PASSWORD"),
+        database: configService.get<string>("DATABASE_NAME"),
+        autoLoadEntities: true,
+      }),
+      inject: [ConfigService],
     }),
     ForumModule,
     CourseModule,

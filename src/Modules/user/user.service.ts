@@ -1,12 +1,11 @@
 import { Injectable } from "@nestjs/common";
+import { InjectRepository } from "@nestjs/typeorm";
+import { FindOptionsWhere, Repository, UpdateResult } from "typeorm";
+import { UpdateCourseDto } from "../course/dto/update-course.dto";
 import { CreateUserDto } from "./dto/create-user.dto";
 import { UpdateUserDto } from "./dto/update-user.dto";
-import { InjectRepository } from "@nestjs/typeorm";
-import { FindOptionsWhere, Repository } from "typeorm";
 import { UserType } from "./entities/user-type.entity";
 import { User } from "./entities/user.entity";
-import { UpdateCourseDto } from "../course/dto/update-course.dto";
-import { UpdateResult } from "typeorm";
 
 /**
  * Clase que contiene los metodos para manipular la entidad de User y Usertype

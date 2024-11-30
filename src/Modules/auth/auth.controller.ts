@@ -3,6 +3,7 @@ import {
   ClassSerializerInterceptor,
   Controller,
   Post,
+  Req,
   Request,
   UnauthorizedException,
   UseGuards,
@@ -73,5 +74,15 @@ export class AuthController {
       req.cookies["refresh"],
       req.user["expiration"],
     );
+  }
+
+  /**
+   *
+   * @param req
+   */
+  @Post("logout")
+  logout(@Req() req: ExpressRequest): void {
+    req.res.clearCookie("token");
+    req.res.clearCookie("refresh");
   }
 }
